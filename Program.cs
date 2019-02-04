@@ -33,8 +33,7 @@ namespace HostingExample
                         services.AddHostedService<ConsoleHostedService>();
                 
                     });
-
-  .
+                
                 hostBuilder.Start();
 
                 Console.WriteLine("The host container has terminated. Press ANY key to exit the console.");
