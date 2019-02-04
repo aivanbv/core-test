@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericHost", "GenericHost.csproj", "{88140CE8-62FC-48F8-9E77-F9982F699675}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TcpMock", "..\TcpMock\TcpMock.csproj", "{B3546144-A54B-4A65-B1EB-E7FD6923626B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88140CE8-62FC-48F8-9E77-F9982F699675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88140CE8-62FC-48F8-9E77-F9982F699675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88140CE8-62FC-48F8-9E77-F9982F699675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88140CE8-62FC-48F8-9E77-F9982F699675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3546144-A54B-4A65-B1EB-E7FD6923626B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3546144-A54B-4A65-B1EB-E7FD6923626B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3546144-A54B-4A65-B1EB-E7FD6923626B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3546144-A54B-4A65-B1EB-E7FD6923626B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {439C677C-304C-4295-AE43-974D8B1BD421}
+	EndGlobalSection
+EndGlobal
