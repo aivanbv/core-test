@@ -34,8 +34,7 @@ namespace HostingExample
                 
                     });
 
-                // Build and run the host in one go; .RCA is specialized for running it in a console.
-                // It registers SIGTERM(Ctrl-C) to the CancellationTokenSource that's shared with all services in the container.
+  .
                 hostBuilder.Start();
 
                 Console.WriteLine("The host container has terminated. Press ANY key to exit the console.");
