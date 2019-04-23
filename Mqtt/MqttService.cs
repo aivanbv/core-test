@@ -62,9 +62,9 @@ namespace GenericHost
                     _mqttClient.Subscribe(new String[] { "/testing" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                     _mqttClient.Subscribe(new String[] { "/mtest" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                 }
-                catch
+                catch (Exception e)
                 {
-                    _logger.LogInformation("No connection to...");
+                    _logger.LogInformation("No connection:"+ e.Message);
                 }
 
                 if(_mqttClient?.IsConnected == true){
