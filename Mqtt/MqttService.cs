@@ -69,7 +69,7 @@ namespace GenericHost
                 }
                 connected = _mqttClient.IsConnected;
                 if(connected == true){
-                    _logger.LogInformation("Connection reconnected");
+                    _logger.LogInformation("Connection connected");
                 }
          
                 await Task.Delay(3000, cancellationToken);
