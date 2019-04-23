@@ -36,7 +36,6 @@ namespace GenericHost
                 // Register to message received
                 _mqttClient.MqttMsgPublishReceived += client_recievedMessage;
                 _mqttClient.ConnectionClosed += _mqttClient_ConnectionClosed;
-            
                 CancellationTokenSource source = new CancellationTokenSource(); Task T = Task.Run(() => TryReconnectAsync(source.Token)); T.Wait();
                 return true;
             }
@@ -51,8 +50,8 @@ namespace GenericHost
         }
         private async Task TryReconnectAsync(CancellationToken cancellationToken)
         {
-            var connected = _mqttClient.IsConnected;
-            while (!connected && !cancellationToken.IsCancellationRequested)
+   
+            while (_mqttClient?.IsConnected == false && !cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -65,13 +64,13 @@ namespace GenericHost
                 }
                 catch
                 {
-                    _logger.LogInformation("No connection to...{0}");
+                    _logger.LogInformation("No connection to...");
                 }
-                connected = _mqttClient.IsConnected;
-                if(connected == true){
+
+                if(_mqttClient?.IsConnected == true){
                     _logger.LogInformation("Connection connected");
                 }
-         
+                
                 await Task.Delay(3000, cancellationToken);
             }
         }
