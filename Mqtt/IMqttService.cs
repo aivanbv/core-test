@@ -8,6 +8,6 @@ namespace GenericHost
 
         bool Connect();
         bool Connected();
-        bool SendMessage(string message);
+        bool SendMessage(string message,string topic);
     }
 }

@@ -26,7 +26,7 @@ namespace GenericHost
             _tcpService = tcpService;
             _appConfig = appConfig;
             _mqttService.MqttServiceClient.MqttMsgPublishReceived += client_recievedMessage;
-            _mqttService.MqttServiceClient.ConnectionClosed += MqttServiceClient_ConnectionClosed; 
+            //_mqttService.MqttServiceClient.ConnectionClosed += MqttServiceClient_ConnectionClosed; 
         
             _logger = logger;
             _logger.LogInformation("ConsoleHostedService instance created...");
@@ -51,39 +51,34 @@ namespace GenericHost
        
             _logger.LogInformation("MqttStatus: "+ _mqttService.Connected().ToString());
 
-            Task T = Task.Run(() => SendMessage());
-            _logger.LogInformation("Task is running");
-
-
+      
+   
             _timer = new Timer(DoWork, null, TimeSpan.Zero,
                 TimeSpan.FromSeconds(5));
+            _logger.LogInformation("Task is running");
+
 
             await Task.CompletedTask;
         }
 
 
+
         private void DoWork(object state)
         {
             _logger.LogInformation("Timed Background Service is working.");
-        }
 
-        private async Task SendMessage()
-        {
-            var connected = _mqttService.Connected();
-            while (connected)
-            {
-                try
+            try
                 {
-                    connected = _mqttService.Connected();
-                    _mqttService.SendMessage(_appConfig.Value.MQTTMessage);
+                    if(_mqttService.MqttServiceClient.IsConnected)
+                    {
+                    _mqttService.SendMessage(_appConfig.Value.MQTTMessage, "/testing");
+                }
+               
                 }
                 catch
                 {
                     _logger.LogInformation("No connection to...{0}");
                 }
-
-                await Task.Delay(3000);
-            }
         }
 
         private void OnStarted()

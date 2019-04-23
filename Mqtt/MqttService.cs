@@ -36,6 +36,7 @@ namespace GenericHost
                 // Register to message received
                 _mqttClient.MqttMsgPublishReceived += client_recievedMessage;
                 _mqttClient.ConnectionClosed += _mqttClient_ConnectionClosed;
+            
                 CancellationTokenSource source = new CancellationTokenSource(); Task T = Task.Run(() => TryReconnectAsync(source.Token)); T.Wait();
                 return true;
             }
@@ -60,7 +61,7 @@ namespace GenericHost
                     _mqttClient.Publish("/testing", Encoding.ASCII.GetBytes("TestMsg"));
                     // Subscribe to topic, Subscribed topics disappear if connection is lost. 
                     _mqttClient.Subscribe(new String[] { "/testing" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-
+                    _mqttClient.Subscribe(new String[] { "/mtest" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                 }
                 catch
                 {
@@ -93,11 +94,11 @@ namespace GenericHost
             return _mqttClient.IsConnected;
         }
 
-        public bool SendMessage(string message)
+        public bool SendMessage(string message, string topic)
         {
             try
             {
-                _mqttClient.Publish("/testing", Encoding.ASCII.GetBytes(message));
+                _mqttClient.Publish(topic, Encoding.ASCII.GetBytes(message));
             }
             catch(Exception e)
             {
