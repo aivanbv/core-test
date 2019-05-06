@@ -13,70 +13,91 @@ namespace GenericHost
 {
     public class TcpService : ITcpService
     {
-        private ILogger<TcpService> _logger;
-        private TcpClient _tcpClient;
+        private static TcpListener serverSocket;
 
-        public TcpService(ILogger<TcpService> logger)
+        public TcpClient TcpServiceClient => throw new NotImplementedException();
+
+        public TcpService()
         {
-            _logger = logger;
-            Connect();
+
+            StartServer();
         }
 
-        public TcpClient TcpServiceClient
+
+
+        public static void StartServer()
+
         {
-            get { return _tcpClient; }
+
+         
+
+            IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Any, 8888);
+
+            serverSocket = new TcpListener(ipEndPoint);
+
+            serverSocket.Start();
+
+            Console.WriteLine("Asynchonous server socket is listening at: " + ipEndPoint.Address.ToString());
+
+            WaitForClients();
+
         }
-        public bool Connect()
+
+        private static void WaitForClients()
+
         {
-            if (_tcpClient?.Connected == true)
+
+            serverSocket.BeginAcceptTcpClient(new System.AsyncCallback(OnClientConnected), null);
+
+        }
+
+        private static void OnClientConnected(IAsyncResult asyncResult)
+
+        {
+
+            try
+
             {
-                return true;
+
+                TcpClient clientSocket = serverSocket.EndAcceptTcpClient(asyncResult);
+
+                if (clientSocket != null)
+
+                    Console.WriteLine("Received connection request from: " + clientSocket.Client.RemoteEndPoint.ToString());
+
+                HandleClientRequest(clientSocket);
+
             }
-            else
+
+            catch
+
             {
-                try
-                {
-                    if (_tcpClient != null && _tcpClient?.Connected == true)
-                    {
-                        _tcpClient.Close();
-                    }
 
-                    // Create the socket object
-                    _tcpClient = new TcpClient();
-                    _tcpClient.ReceiveTimeout = 4000;
-
-                    // Define the Server address and port
-                    IPEndPoint ModemEndPoint = new IPEndPoint(IPAddress.Parse("10.29.208.156"), 23);
-
-
-                    var test = _tcpClient.BeginConnect("10.29.208.156", 8001, null, null);
-                    var result = test.AsyncWaitHandle.WaitOne();
-                    if (result && _tcpClient.Connected)
-                    {
-                        _logger.LogInformation("Tcp Connected");
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-
-
-                }
-                catch
-                {
-                    return false;
-                }
+                throw;
 
             }
+
+            WaitForClients();
+
         }
+
+        private static void HandleClientRequest(TcpClient clientSocket)
+        {
+            Console.WriteLine("Test");
+        }
+
 
         public bool Connected()
         {
-            return _tcpClient?.Connected ?? false;
+            return false;
         }
 
         public bool SendMessage(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ITcpService.Connect()
         {
             throw new NotImplementedException();
         }
